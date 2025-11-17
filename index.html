@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>meno store</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>MENO</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MENO STORE</title>
+
+<style>
+
+  /* تم الحفاظ على نفس تصميم CSS الذي تم تطويره مسبقًا */
+
+  body {
+
+    font-family: "Cairo", sans-serif;
+
+    background: linear-gradient(135deg, #000, #b8860b);
+
+    color: white;
+
+    text-align: center;
+
+    margin: 0;
+
+    padding: 0;
+
+  }
+
+  h1 {
+
+    margin: 20px 0;
+
+    color: gold;
+
+    text-shadow: 0 0 15px gold;
+
+    animation: neon-glow 1.5s ease-in-out infinite alternate, 
+
+               floating-text 4s ease-in-out infinite alternate;
+
+  }
+
+  @keyframes neon-glow {
+
+    from {
+
+      text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ffd700, 0 0 20px #ffd700, 0 0 25px #ffd700, 0 0 30px #ff00de, 0 0 35px #ff00de;
+
+      color: gold;
+
+    }
+
+    to {
+
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffa500, 0 0 40px #ffa500, 0 0 50px #ffa500, 0 0 60px #ff00de, 0 0 70px #ff00de;
+
+      color: #ffdd55;
+
+    }
+
+  }
+
+  @keyframes floating-text {
+
+      0% {
+
+          transform: translateY(0);
+
+      }
+
+      50% {
+
+          transform: translateY(-10px);
+
+      }
+
+      100% {
+
+          transform: translateY(0);
+
+      }
+
+  }
+
+  .hidden {
+
+    display: none;
+
+  }
+
+  input, select {
+
+    width: 80%;
+
+    padding: 10px;
+
+    margin: 8px 0;
+
+    border-radius: 10px;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 16px;
+
+  }
+
+  
+
+  /* تعديل عرض أزرار البحث لتكون أصغر قليلاً */
+
+  #searchItemInput {
+
+    width: 65%; 
+
+    margin-left: 5px;
+
+  }
+
+  #searchItemButton {
+
+    width: 30%;
+
+    padding: 10px 0;
+
+    margin: 0;
+
+    display: inline-block;
+
+    vertical-align: top;
+
+  }
+
+  button {
+
+    background: gold;
+
+    color: black;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 10px 20px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    margin: 10px;
+
+    transition: background 0.3s;
+
+  }
+
+  button:hover {
+
+    background: #ffdd55;
+
+  }
+
+  
+
+  /* زر خاص لسجل الشراء للمستخدمين */
+
+  .view-history-btn {
+
+    background-color: #00bcd4; /* لون أزرق مميز */
+
+    color: white;
+
+  }
+
+  .view-history-btn:hover {
+
+    background-color: #0097a7;
+
+  }
+
+  
+
+  /* زر الموافقة في لوحة المشرف */
+
+  .approve-btn {
+
+    background-color: #4CAF50; /* أخضر */
+
+    color: white;
+
+  }
+
+  .approve-btn:hover {
+
+    background-color: #45a049;
+
+  }
+
+  
+
+  /* زر الحذف في لوحة المشرف */
+
+  .delete-log-btn {
+
+    background-color: crimson;
+
+    color: white;
+
+  }
+
+  .delete-log-btn:hover {
+
+    background-color: red;
+
+  }
+
+  
+
+  /* زر حذف سجل المستخدم */
+
+  .user-delete-btn {
+
+    background-color: #ff9800; /* برتقالي */
+
+    color: white;
+
+  }
+
+  .user-delete-btn:hover {
+
+    background-color: #f57c00;
+
+  }
+
+  .container {
+
+    background: rgba(0, 0, 0, 0.6);
+
+    border: 2px solid gold;
+
+    border-radius: 20px;
+
+    box-shadow: 0 0 15px gold;
+
+    max-width: 400px;
+
+    margin: 50px auto;
+
+    padding: 20px;
+
+  }
+
+  .admin-panel, .user-home, .history-view {
+
+    max-width: 90%;
+
+    margin: 20px auto;
+
+    border: 2px solid gold;
+
+    border-radius: 15px;
+
+    padding: 15px;
+
+    background: rgba(0,0,0,0.7);
+
+  }
+
+  .section {
+
+    margin: 15px 0;
+
+    padding: 10px;
+
+    border: 1px solid gold;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+  }
+
+  
+
+  /* تعديل خاص لقسم البحث لعرض النتيجة فقط */
+
+  #itemSearchResult {
+
+    border: 2px dashed #00bcd4;
+
+    padding: 15px;
+
+    margin-top: 15px;
+
+    background: rgba(0, 188, 212, 0.1);
+
+    min-height: 50px;
+
+  }
+
+  
+
+  /* تنسيق الإشعارات والسجلات */
+
+  .log-item {
+
+      text-align: right;
+
+      border: 1px solid #ffd700;
+
+      border-radius: 10px;
+
+      padding: 10px;
+
+      margin-bottom: 10px;
+
+      background: rgba(255, 215, 0, 0.1);
+
+  }
+
+  .log-item p {
+
+      margin: 5px 0;
+
+  }
+
+  .card {
+
+    display: inline-block;
+
+    width: 160px;
+
+    background: rgba(255, 215, 0, 0.1);
+
+    border: 1px solid gold;
+
+    border-radius: 15px;
+
+    margin: 10px;
+
+    padding: 10px;
+
+    box-shadow: 0 0 10px gold;
+
+    word-wrap: break-word;
+
+  }
+
+  .card img {
+
+    width: 100%;
+
+    height: 100px;
+
+    border-radius: 10px;
+
+    object-fit: cover;
+
+  }
+
+  .card h3 {
+
+    margin: 5px 0;
+
+  }
+
+  .logout-btn {
+
+    background: crimson;
+
+    color: white;
+
+  }
+
+  .logout-btn:hover {
+
+    background: red;
+
+  }
+
+  
+
+  .social-buttons button {
+
+      width: 45%;
+
+      padding: 12px;
+
+      font-size: 18px;
+
+      margin: 5px;
+
+  }
+
+  .whatsapp-btn {
+
+      background-color: #25D366;
+
+      color: white;
+
+  }
+
+  .whatsapp-btn:hover {
+
+      background-color: #128C7E;
+
+  }
+
+  .telegram-btn {
+
+      background-color: #0088CC;
+
+      color: white;
+
+  }
+
+  .telegram-btn:hover {
+
+      background-color: #006AA7;
+
+  }
+
+  .forgot-password-btn {
+
+      background-color: #ff5722;
+
+      color: white;
+
+      width: 80%;
+
+      margin-top: 15px;
+
+  }
+
+  .forgot-password-btn:hover {
+
+      background-color: #e64a19;
+
+  }
+
+  .charge-account-btn {
+
+      background-color: #4CAF50;
+
+      color: white;
+
+  }
+
+  .charge-account-btn:hover {
+
+      background-color: #45a049;
+
+  }
+
+  .balance-display {
+
+      font-size: 18px;
+
+      color: #ffd700;
+
+      margin: 10px 0 20px 0;
+
+      padding: 5px 10px;
+
+      border: 1px dashed #ffd700;
+
+      border-radius: 8px;
+
+      display: inline-block;
+
+  }
+
+  .buy-now-btn {
+
+      background-color: #FF4500; /* لون جديد للشراء الفوري */
+
+      color: white;
+
+  }
+
+  .buy-now-btn:hover {
+
+      background-color: #e63900;
+
+  }
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🔥 MENO STORE 🔥</h1>
+
+<div id="loginSection" class="container">
+
+  <h2>تسجيل الدخول</h2>
+
+  <input type="text" id="loginUser" placeholder="اسم المستخدم"><br>
+
+  <input type="password" id="loginPass" placeholder="كلمة المرور"><br>
+
+  <button onclick="login()">دخول</button>
+
+  <button onclick="showSignup()">إنشاء حساب</button>
+
+  
+
+  <button class="forgot-password-btn" onclick="goToForgottenPassword()">نسيت كلمة السر؟</button>
+
+  <hr style="border-color: rgba(255, 215, 0, 0.3); margin: 20px 0;">
+
+  
+
+  <div class="social-buttons">
+
+    <h3>للتواصل والدعم:</h3>
+
+    <button class="whatsapp-btn" onclick="goToWhatsAppGeneral()">
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" style="width: 20px; vertical-align: middle;"> واتساب
+
+    </button>
+
+    <button class="telegram-btn" onclick="goToTelegram()">
+
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="width: 20px; vertical-align: middle;"> تليجرام
+
+    </button>
+
+  </div>
+
+</div>
+
+<div id="signupSection" class="container hidden">
+
+  <h2>إنشاء حساب جديد</h2>
+
+  <input type="text" id="signupUser" placeholder="اسم المستخدم"><br>
+
+  <input type="password" id="signupPass" placeholder="كلمة المرور"><br>
+
+  <input type="text" id="signupPhone" placeholder="رقم الهاتف (11 رقم)"><br>
+
+  <input type="text" id="signupEmail" placeholder="البريد الإلكتروني (gmail.com)"><br>
+
+  <button onclick="signup()">إنشاء</button>
+
+  <button onclick="showLogin()">رجوع</button>
+
+</div>
+
+<div id="userHome" class="user-home hidden">
+
+  <h2>مرحبًا <span id="usernameDisplay"></span> 👋</h2>
+
+  
+
+  <div class="balance-display">
+
+    رصيدك الحالي: <span id="userBalanceDisplay">0</span> جنيه
+
+  </div>
+
+  
+
+  <div style="margin-bottom: 15px;">
+
+    <button class="charge-account-btn" onclick="goToChargeAccount()">شحن حسابي 💰</button> 
+
+    <button class="view-history-btn" onclick="showUserHistory()">سجل الشراء (يمكن حذفه)</button>
+
+  </div>
+
+  
+
+  <div style="margin-bottom: 15px; display: flex; justify-content: center; align-items: center;">
+
+    <input type="text" id="searchItemInput" placeholder="ابحث بكود الخدمة (ID)">
+
+    <button id="searchItemButton" onclick="searchItemByID()">🔍 بحث</button>
+
+  </div>
+
+  <div id="itemSearchResult" class="section">
+
+    </div>
+
+  
+
+  <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+
+  <div id="userCategories" class="section"></div>
+
+  <div id="userSubCategories" class="section"></div>
+
+  <div id="userItems" class="section"></div>
+
+</div>
+
+<div id="userHistoryView" class="history-view hidden">
+
+    <h2>سجل الشراء الخاص بك</h2>
+
+    <p>هذا السجل مؤقت ويمكنك حذفه متى شئت. سيتم حفظ السجلات التي يوافق عليها المشرف بشكل دائم في سجله.</p>
+
+    <button onclick="clearUserHistory()" class="user-delete-btn">مسح سجل الشراء بالكامل ❌</button>
+
+    <button onclick="openHome()" class="view-history-btn">العودة للرئيسية ↩️</button>
+
+    <div id="userHistoryList" style="margin-top: 20px;"></div>
+
+</div>
+
+<div id="adminPanel" class="admin-panel hidden">
+
+  <h2>لوحة تحكم المشرف 🛠️</h2>
+
+  <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+
+  <div class="section" style="display: block;">
+
+    <h3>🔔 إشعارات الشراء الجديدة <span id="pendingCount"></span></h3>
+
+    <div id="pendingOrdersList"></div>
+
+  </div>
+
+  
+
+  <div class="section" style="display: block;">
+
+    <h3>سجل الشراء الدائم (لا يمكن حذفه)</h3>
+
+    <button onclick="loadAdminLog()">تحديث السجل</button>
+
+    <div id="adminLogList"></div>
+
+  </div>
+
+  <div class="section" style="display: block;">
+
+    <h3>إدارة المستخدمين</h3>
+
+    <input type="text" id="searchUserInput" placeholder="بحث بالاسم / الهاتف / الإيميل">
+
+    <button onclick="searchUser()">بحث</button>
+
+    <div id="usersList"></div>
+
+  </div>
+
+  <div class="section" style="display: block;">
+
+    <h3>إدارة الأقسام</h3>
+
+    <button onclick="addMainCategory()">➕ إضافة قسم رئيسي</button>
+
+    <button onclick="addItem()">📦 إضافة سلعة جديدة</button>
+
+    <div id="mainCategories"></div>
+
+  </div>
+
+  <div class="section" style="display: block;">
+
+    <h3>إضافة حقل مخصص للمستخدمين</h3>
+
+    <button onclick="addCustomField()">➕ إضافة خانة جديدة للمستخدم</button>
+
+    <button onclick="addRequiredOrderField()">➕ إضافة خانة طلب مطلوبة (ID الخدمة)</button>
+
+  </div>
+
+</div>
+
+<script>
+
+// ---------- المتغيرات والثوابت ----------
+
+const ADMIN_USERNAME = "admin";
+
+const ADMIN_PASSWORD = "987456123@";
+
+// قيمة افتراضية للروابط (تم نقلها كما هي)
+
+const WHATSAPP_NUMBER = "201113318419"; 
+
+const WHATSAPP_GENERAL_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text`;
+
+const WHATSAPP_CHARGE_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=%D8%B4%D8%AD%D9%86%20%D8%AD%D8%B3%D8%A7%D8%A8%D9%8A`; 
+
+const WHATSAPP_FORGOTTEN_PASSWORD_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=%D9%86%D8%B3%D9%8A%D8%AA%20%D9%83%D9%84%D9%85%D9%87%20%D8%A7%D9%84%D8%B3%D8%B1`; 
+
+const TELEGRAM_LINK = "https://t.me/Alpo_Tik";
+
+// دوال التوجيه للروابط
+
+function goToWhatsAppGeneral(){
+
+    window.open(WHATSAPP_GENERAL_LINK, '_blank');
+
+}
+
+function goToTelegram(){
+
+    window.open(TELEGRAM_LINK, '_blank');
+
+}
+
+function goToChargeAccount(){
+
+    window.open(WHATSAPP_CHARGE_LINK, '_blank');
+
+}
+
+function goToForgottenPassword(){
+
+    window.open(WHATSAPP_FORGOTTEN_PASSWORD_LINK, '_blank');
+
+}
+
+// ---------- تبديل النماذج ----------
+
+function showSignup(){
+
+  document.getElementById("loginSection").classList.add("hidden");
+
+  document.getElementById("signupSection").classList.remove("hidden");
+
+}
+
+function showLogin(){
+
+  document.getElementById("signupSection").classList.add("hidden");
+
+  document.getElementById("loginSection").classList.remove("hidden");
+
+}
+
+// =========================================================
+
+// -------------------- سجل الشراء والإشعارات (جديد) --------------------
+
+// دالة لجلب السجلات المعلقة (الإشعارات)
+
+function getPendingOrders() {
+
+    return JSON.parse(localStorage.getItem("pendingNotifications") || "[]");
+
+}
+
+// دالة لجلب السجل الدائم للمشرف
+
+function getAdminLog() {
+
+    return JSON.parse(localStorage.getItem("adminPurchaseLog") || "[]");
+
+}
+
+// دالة لجلب سجل المستخدم
+
+function getUserHistory(username) {
+
+    const dataStr = localStorage.getItem("user_" + username);
+
+    if (!dataStr) return [];
+
+    let data = JSON.parse(dataStr);
+
+    return data.history || [];
+
+}
+
+// =========================================================
+
+// ---------- إنشاء حساب / تسجيل الدخول / بيانات المستخدم ----------
+
+function signup(){
+
+  const user = document.getElementById("signupUser").value.trim();
+
+  const pass = document.getElementById("signupPass").value.trim();
+
+  const phone = document.getElementById("signupPhone").value.trim();
+
+  const email = document.getElementById("signupEmail").value.trim();
+
+  if(!user || !pass || !phone || !email) return alert("املأ كل الخانات!");
+
+  if(localStorage.getItem("user_"+user)) return alert("الاسم مستخدم بالفعل!");
+
+  if(!/^\d{11}$/.test(phone)) return alert("رقم الهاتف يجب أن يكون 11 رقم!");
+
+  if(!/@gmail\.com$/.test(email)) return alert("البريد يجب أن يكون gmail.com فقط!");
+
+  const customFields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+  const initialCustomData = {};
+
+  customFields.forEach(field => {
+
+    initialCustomData[field] = ""; 
+
+  });
+
+  localStorage.setItem("user_"+user, JSON.stringify({
+
+    password: pass,
+
+    phone: phone,
+
+    email: email,
+
+    balance: 0,
+
+    logged: false,
+
+    cart: [], 
+
+    customData: initialCustomData,
+
+    history: [] // حقل جديد لسجل المستخدم
+
+  }));
+
+  alert("✅ تم إنشاء الحساب بنجاح!");
+
+  showLogin();
+
+}
+
+function login(){
+
+  const user = document.getElementById("loginUser").value.trim();
+
+  const pass = document.getElementById("loginPass").value.trim();
+
+  if(user === ADMIN_USERNAME && pass === ADMIN_PASSWORD){
+
+    localStorage.setItem("loggedUser", "admin");
+
+    openAdmin();
+
+    return;
+
+  }
+
+  const dataStr = localStorage.getItem("user_"+user);
+
+  if(!dataStr) return alert("المستخدم غير موجود!");
+
+  const data = JSON.parse(dataStr);
+
+  if(data.password !== pass) return alert("كلمة المرور خاطئة!");
+
+  data.logged = true;
+
+  localStorage.setItem("user_"+user, JSON.stringify(data));
+
+  localStorage.setItem("loggedUser", user);
+
+  alert("✅ تم تسجيل الدخول بنجاح!");
+
+  openHome();
+
+}
+
+function openHome(){
+
+  document.getElementById("loginSection").classList.add("hidden");
+
+  document.getElementById("signupSection").classList.add("hidden");
+
+  document.getElementById("adminPanel").classList.add("hidden");
+
+  document.getElementById("userHistoryView").classList.add("hidden"); // إخفاء سجل المستخدم
+
+  document.getElementById("userHome").classList.remove("hidden");
+
+  const user = localStorage.getItem("loggedUser");
+
+  document.getElementById("usernameDisplay").textContent = user;
+
+  loadUserData(user); 
+
+  loadCategoriesForUser();
+
+  document.getElementById("itemSearchResult").innerHTML = "";
+
+}
+
+function loadUserData(username){
+
+    const dataStr = localStorage.getItem("user_"+username);
+
+    if (!dataStr) return; 
+
+    let data = JSON.parse(dataStr);
+
+    
+
+    // التأكد من أن حقل السلة والسجل موجودين
+
+    if (!Array.isArray(data.cart)) data.cart = [];
+
+    if (!Array.isArray(data.history)) data.history = [];
+
+    localStorage.setItem("user_"+username, JSON.stringify(data));
+
+    
+
+    document.getElementById("userBalanceDisplay").textContent = Number(data.balance).toFixed(2);
+
+}
+
+// =========================================================
+
+// ---------- سجل الشراء للمستخدم (جديد) ----------
+
+function showUserHistory() {
+
+    document.getElementById("userHome").classList.add("hidden");
+
+    document.getElementById("userHistoryView").classList.remove("hidden");
+
+    
+
+    const user = localStorage.getItem("loggedUser");
+
+    const history = getUserHistory(user);
+
+    const historyListDiv = document.getElementById("userHistoryList");
+
+    historyListDiv.innerHTML = "";
+
+    if (history.length === 0) {
+
+        historyListDiv.innerHTML = "<p>لا يوجد سجل شراء لديك حالياً.</p>";
+
+        return;
+
+    }
+
+    // عرض السجل الأحدث أولاً
+
+    history.slice().reverse().forEach((log, index) => {
+
+        const logItem = document.createElement("div");
+
+        logItem.className = "log-item";
+
+        // index هو المعرف في المصفوفة الأصلية، لذا يجب عكسه
+
+        const originalIndex = history.length - 1 - index; 
+
+        logItem.innerHTML = `
+
+            <p><strong>الطلب:</strong> ${log.itemName} (ID: ${log.itemId})</p>
+
+            <p><strong>المبلغ المدفوع:</strong> ${Number(log.price).toFixed(2)} جنيه</p>
+
+            <p><strong>التاريخ:</strong> ${new Date(log.timestamp).toLocaleString('ar-EG')}</p>
+
+            <p><strong>حالة الطلب:</strong> **${log.status}**</p>
+
+            <button onclick="deleteUserHistoryItem(${originalIndex})" class="user-delete-btn" style="margin-top: 5px; padding: 5px 10px;">مسح هذا السجل</button>
+
+        `;
+
+        historyListDiv.appendChild(logItem);
+
+    });
+
+}
+
+function deleteUserHistoryItem(index) {
+
+    const user = localStorage.getItem("loggedUser");
+
+    const dataStr = localStorage.getItem("user_" + user);
+
+    if (!dataStr) return;
+
+    let data = JSON.parse(dataStr);
+
+    if (confirm("هل أنت متأكد من مسح هذا السجل من قائمتك؟")) {
+
+        data.history.splice(index, 1);
+
+        localStorage.setItem("user_" + user, JSON.stringify(data));
+
+        alert("✅ تم مسح السجل بنجاح!");
+
+        showUserHistory(); // إعادة تحميل الواجهة
+
+    }
+
+}
+
+function clearUserHistory() {
+
+    const user = localStorage.getItem("loggedUser");
+
+    const dataStr = localStorage.getItem("user_" + user);
+
+    if (!dataStr) return;
+
+    let data = JSON.parse(dataStr);
+
+    if (confirm("هل أنت متأكد من مسح كل سجل الشراء الخاص بك؟")) {
+
+        data.history = [];
+
+        localStorage.setItem("user_" + user, JSON.stringify(data));
+
+        alert("✅ تم مسح سجل الشراء بالكامل!");
+
+        showUserHistory(); // إعادة تحميل الواجهة
+
+    }
+
+}
+
+// =========================================================
+
+// ---------- عرض السلع للمستخدم (بدون تغيير كبير) ----------
+
+function loadCategoriesForUser(){
+
+  // ... (نفس الكود السابق لعرض الأقسام)
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const container = document.getElementById("userCategories");
+
+  container.innerHTML = "";
+
+  if(cats.length === 0){
+
+    container.innerHTML = "<p>لا توجد أقسام حالياً.</p>";
+
+    return;
+
+  }
+
+  cats.forEach((cat, index)=>{
+
+    const btn = document.createElement("button");
+
+    btn.textContent = cat.name;
+
+    btn.onclick = ()=>showSubCategories(index); 
+
+    container.appendChild(btn);
+
+  });
+
+}
+
+function showSubCategories(mainIndex, parentSubIndex = null){
+
+  // ... (نفس الكود السابق لعرض الأقسام الفرعية)
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const mainCat = cats[mainIndex];
+
+  const subDiv = document.getElementById("userSubCategories");
+
+  const itemsDiv = document.getElementById("userItems");
+
+  itemsDiv.innerHTML = "";
+
+  
+
+  let currentLevel = mainCat.subs;
+
+  let categoryPath = mainCat.name;
+
+  if (parentSubIndex !== null) {
+
+      currentLevel = mainCat.subs[parentSubIndex].subs || [];
+
+      categoryPath += ` / ${mainCat.subs[parentSubIndex].name}`;
+
+  }
+
+  
+
+  subDiv.innerHTML = `<h3>الأقسام الفرعية لـ ${categoryPath}</h3>`;
+
+  if(currentLevel.length === 0){
+
+    subDiv.innerHTML += "<p>لا توجد أقسام فرعية.</p>";
+
+    return;
+
+  }
+
+  currentLevel.forEach((sub, index)=>{
+
+    const btn = document.createElement("button");
+
+    btn.textContent = sub.name;
+
+    
+
+    if(sub.subs && sub.subs.length > 0){
+
+        btn.onclick = ()=> parentSubIndex === null ? showSubCategories(mainIndex, index) : showItems(sub);
+
+    } else {
+
+        btn.onclick = ()=>showItems(sub);
+
+    }
+
+    subDiv.appendChild(btn);
+
+  });
+
+}
+
+function showItems(subCat){
+
+  // ... (نفس الكود السابق لعرض السلع)
+
+  const itemsDiv = document.getElementById("userItems");
+
+  itemsDiv.innerHTML = `<h3>سلع قسم ${subCat.name}</h3>`;
+
+  if(!subCat.items || subCat.items.length === 0){
+
+    itemsDiv.innerHTML += "<p>لا توجد سلع هنا حالياً.</p>";
+
+    return;
+
+  }
+
+  subCat.items.forEach(item=>{
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+    card.innerHTML = `
+
+      <img src="${item.image || 'https://via.placeholder.com/150'}">
+
+      <h3>${item.name}</h3>
+
+      <p>كود الخدمة (ID): ${item.id}</p>
+
+      <p>السعر: ${Number(item.price).toFixed(2)} جنيه</p> 
+
+      <button class="buy-now-btn" onclick="buyNow('${item.name}','${item.id}', ${item.price}, '${item.orderField}')">شراء الآن 🛒</button>
+
+    `;
+
+    itemsDiv.appendChild(card);
+
+  });
+
+}
+
+// دالة البحث عن سلعة بالـ ID (بدون تغيير)
+
+function searchItemByID(){
+
+    const searchID = document.getElementById("searchItemInput").value.trim();
+
+    const resultDiv = document.getElementById("itemSearchResult");
+
+    resultDiv.innerHTML = "<h3>نتائج البحث:</h3>";
+
+    if (!searchID) {
+
+        resultDiv.innerHTML += "<p>الرجاء إدخال كود الخدمة (ID) للبحث.</p>";
+
+        return;
+
+    }
+
+    const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+    let foundItem = null;
+
+    // دالة مساعدة للبحث بشكل متكرر داخل الأقسام المتداخلة
+
+    function findItem(categories) {
+
+        for (const cat of categories) {
+
+            // البحث داخل السلع مباشرة (إذا كانت موجودة)
+
+            if (cat.items) {
+
+                const item = cat.items.find(i => i.id.toLowerCase() === searchID.toLowerCase());
+
+                if (item) return item;
+
+            }
+
+            // البحث داخل الأقسام الفرعية (إذا كانت موجودة)
+
+            if (cat.subs) {
+
+                const item = findItem(cat.subs);
+
+                if (item) return item;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
+    foundItem = findItem(cats);
+
+    if (foundItem) {
+
+        const item = foundItem;
+
+        const card = document.createElement("div");
+
+        card.className = "card";
+
+        card.style.width = "90%";
+
+        card.innerHTML = `
+
+          <img src="${item.image || 'https://via.placeholder.com/150'}">
+
+          <h3>${item.name}</h3>
+
+          <p>كود الخدمة (ID): ${item.id}</p>
+
+          <p>السعر: **${Number(item.price).toFixed(2)} جنيه**</p> 
+
+          <p>مطلوب: **${item.orderField}**</p>
+
+          <button class="buy-now-btn" onclick="buyNow('${item.name}','${item.id}', ${item.price}, '${item.orderField}')">شراء الآن 🛒</button>
+
+        `;
+
+        resultDiv.appendChild(card);
+
+    } else {
+
+        resultDiv.innerHTML += `<p>❌ لم يتم العثور على سلعة بالكود: **${searchID}**</p>`;
+
+    }
+
+}
+
+// دالة الشراء الفوري (تم التعديل لإضافة السجل المؤقت والإشعار)
+
+function buyNow(itemName, itemId, price, orderFieldName) {
+
+    const user = localStorage.getItem("loggedUser");
+
+    const dataStr = localStorage.getItem("user_"+user);
+
+    if (!dataStr) return alert("خطأ في بيانات المستخدم.");
+
+    
+
+    const data = JSON.parse(dataStr);
+
+    const itemPrice = Number(price);
+
+    // 1. طلب البيانات المخصصة وحقل الطلب (كما كان سابقًا)
+
+    const customFields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+    let customInputs = {};
+
+    let allFieldsValid = true;
+
+    if(customFields.length > 0) {
+
+        alert(`يرجى مراجعة البيانات المحفوظة لحسابك.`);
+
+    }
+
+    customFields.forEach(field => {
+
+        let storedValue = data.customData?.[field] || '';
+
+        let value = prompt(`القيمة المخزنة لـ (${field}): ${storedValue}\nإذا أردت تغييرها أدخل القيمة الجديدة، وإلا اضغط إلغاء أو اتركها فارغة:`, storedValue);
+
+        
+
+        if (value !== null) {
+
+            data.customData[field] = value.trim() || storedValue;
+
+        }
+
+        customInputs[field] = data.customData[field]; 
+
+    });
+
+    localStorage.setItem("user_"+user, JSON.stringify(data)); 
+
+    let orderInput = prompt(`الرجاء إدخال البيانات المطلوبة للطلب (مثل ID اللعبة/الحساب) في خانة: ${orderFieldName}`);
+
+    if (orderInput === null || orderInput.trim() === "") {
+
+        return alert("❌ تم إلغاء عملية الشراء. يجب ملء حقل الطلب المطلوب.");
+
+    }
+
+    
+
+    // 2. التحقق من الرصيد
+
+    if (data.balance < itemPrice) {
+
+        return alert(`❌ فشل إتمام الشراء! رصيدك (${data.balance.toFixed(2)} جنيه) أقل من المطلوب (${itemPrice.toFixed(2)} جنيه). يرجى شحن حسابك.`);
+
+    }
+
+    // 3. تأكيد الشراء
+
+    if (!confirm(`هل أنت متأكد من شراء "${itemName}" بمبلغ ${itemPrice.toFixed(2)} جنيه؟`)) {
+
+        return;
+
+    }
+
+    
+
+    // 4. الخصم وتحديث بيانات المستخدم
+
+    data.balance -= itemPrice;
+
+    
+
+    // 5. إنشاء سجل مؤقت للمستخدم وإضافة إشعار للمشرف
+
+    const orderID = Date.now(); // معرف فريد مؤقت
+
+    const timestamp = new Date().toISOString();
+
+    
+
+    // أ. سجل المستخدم القابل للحذف
+
+    const userLog = {
+
+        id: orderID,
+
+        itemName,
+
+        itemId,
+
+        price: itemPrice,
+
+        orderField: orderFieldName,
+
+        orderInput: orderInput.trim(),
+
+        timestamp,
+
+        status: "قيد المعالجة" 
+
+    };
+
+    data.history.push(userLog);
+
+    
+
+    // ب. إشعار المشرف (يظهر في الواجهة)
+
+    const notification = {
+
+        id: orderID,
+
+        username: user,
+
+        phone: data.phone,
+
+        email: data.email,
+
+        itemName,
+
+        itemId,
+
+        price: itemPrice,
+
+        orderField: orderFieldName,
+
+        orderInput: orderInput.trim(),
+
+        customData: customInputs,
+
+        timestamp,
+
+        status: "جديد - قيد المعالجة"
+
+    };
+
+    
+
+    const pending = getPendingOrders();
+
+    pending.push(notification);
+
+    localStorage.setItem("pendingNotifications", JSON.stringify(pending));
+
+    localStorage.setItem("user_"+user, JSON.stringify(data));
+
+    loadUserData(user); 
+
+    // 6. رسالة تأكيد للمستخدم
+
+    alert(`✅ تم الشراء بنجاح! تم خصم ${itemPrice.toFixed(2)} جنيه. رصيدك الحالي: ${data.balance.toFixed(2)} جنيه. سيتم إرسال طلبك للمشرف الآن.`);
+
+    
+
+    // 7. إرسال الطلب للمشرف عبر الواتساب (رسالة أولى)
+
+    let whatsappOrderDetails = `*📢 طلب شراء فوري جديد!* (ID: ${orderID})\n--------------------------------\n*بيانات المستخدم:*\n• الاسم: ${user}\n• الهاتف: ${data.phone}\n• الإيميل: ${data.email}\n--------------------------------\n*تفاصيل السلعة المطلوبة:*\n• اسم السلعة: ${itemName}\n• كود الخدمة: ${itemId}\n• السعر المدفوع: ${itemPrice.toFixed(2)} جنيه\n--------------------------------\n*البيانات المخصصة (المطلوبة للطلب):*\n• ${orderFieldName}: ${orderInput.trim()}\n--------------------------------\n*الرصيد المتبقي:* ${data.balance.toFixed(2)} جنيه\n*يرجى مراجعة لوحة المشرف للموافقة!*`;
+
+    
+
+    const details = encodeURIComponent(whatsappOrderDetails);
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${details}`, '_blank');
+
+}
+
+function logout(){
+
+  const user = localStorage.getItem("loggedUser");
+
+  if(user && user!=="admin"){
+
+    const data = JSON.parse(localStorage.getItem("user_"+user));
+
+    data.logged = false;
+
+    localStorage.setItem("user_"+user, JSON.stringify(data));
+
+  }
+
+  localStorage.removeItem("loggedUser");
+
+  document.getElementById("userHome").classList.add("hidden");
+
+  document.getElementById("adminPanel").classList.add("hidden");
+
+  document.getElementById("userHistoryView").classList.add("hidden");
+
+  document.getElementById("loginSection").classList.remove("hidden");
+
+}
+
+// =========================================================
+
+// ------------------ لوحة المشرف (إدارة السجلات) ------------------
+
+function openAdmin(){
+
+  document.getElementById("loginSection").classList.add("hidden");
+
+  document.getElementById("signupSection").classList.add("hidden");
+
+  document.getElementById("userHome").classList.add("hidden");
+
+  document.getElementById("adminPanel").classList.remove("hidden");
+
+  loadUsersList();
+
+  loadCategoriesAdmin();
+
+  loadPendingOrders(); // تحميل الإشعارات الجديدة
+
+  loadAdminLog(); // تحميل السجل الدائم
+
+}
+
+// دالة تحميل وعرض الإشعارات المعلقة (الجديدة)
+
+function loadPendingOrders() {
+
+    const pendingListDiv = document.getElementById("pendingOrdersList");
+
+    const pendingOrders = getPendingOrders();
+
+    pendingListDiv.innerHTML = "";
+
+    
+
+    document.getElementById("pendingCount").textContent = `(${pendingOrders.length} طلب)`;
+
+    if (pendingOrders.length === 0) {
+
+        pendingListDiv.innerHTML = "<p>🎉 لا توجد إشعارات شراء جديدة.</p>";
+
+        return;
+
+    }
+
+    
+
+    // عرض الإشعارات الأحدث أولاً
+
+    pendingOrders.slice().reverse().forEach((order) => {
+
+        const orderItem = document.createElement("div");
+
+        orderItem.className = "log-item";
+
+        
+
+        let customDataHtml = "";
+
+        for (const field in order.customData) {
+
+            customDataHtml += `• ${field}: ${order.customData[field] || 'لا يوجد'}<br>`;
+
+        }
+
+        orderItem.innerHTML = `
+
+            <h4>📌 إشعار جديد (ID: ${order.id})</h4>
+
+            <p><strong>المستخدم:</strong> ${order.username} (رصيده المتبقي: ${Number(JSON.parse(localStorage.getItem("user_"+order.username))?.balance || 0).toFixed(2)})</p>
+
+            <p><strong>تفاصيل الطلب:</strong> ${order.itemName} بسعر ${Number(order.price).toFixed(2)} جنيه</p>
+
+            <p><strong>المطلوب للطلب:</strong> ${order.orderField}: **${order.orderInput}**</p>
+
+            <p><strong>بيانات المستخدم المحفوظة:</strong><br>${customDataHtml}</p>
+
+            <p><strong>وقت الطلب:</strong> ${new Date(order.timestamp).toLocaleString('ar-EG')}</p>
+
+            <button onclick="approveOrder(${order.id})" class="approve-btn">✅ تم التنفيذ/الموافقة (حفظ في السجل الدائم)</button>
+
+            <button onclick="removePendingOrder(${order.id})" class="delete-log-btn">🗑 حذف الإشعار من الواجهة</button>
+
+        `;
+
+        pendingListDiv.appendChild(orderItem);
+
+    });
+
+}
+
+// دالة الموافقة: يتم نقل السجل من الإشعارات إلى السجل الدائم
+
+function approveOrder(orderId) {
+
+    const pending = getPendingOrders();
+
+    const orderIndex = pending.findIndex(o => o.id === orderId);
+
+    
+
+    if (orderIndex === -1) return alert("❌ خطأ: لم يتم العثور على الطلب في الإشعارات.");
+
+    
+
+    const approvedOrder = pending[orderIndex];
+
+    if (confirm(`هل أنت متأكد من الموافقة على طلب ${approvedOrder.username} لـ ${approvedOrder.itemName}؟ سيتم حفظه في السجل الدائم.`)) {
+
+        
+
+        // 1. إضافة الطلب إلى السجل الدائم للمشرف
+
+        const adminLog = getAdminLog();
+
+        adminLog.push({...approvedOrder, status: "تم التنفيذ والموافقة"});
+
+        localStorage.setItem("adminPurchaseLog", JSON.stringify(adminLog));
+
+        // 2. تحديث سجل المستخدم ليصبح "تم الموافقة"
+
+        const userKey = "user_" + approvedOrder.username;
+
+        const data = JSON.parse(localStorage.getItem(userKey));
+
+        const userLogIndex = data.history.findIndex(h => h.id === orderId);
+
+        if (userLogIndex !== -1) {
+
+             data.history[userLogIndex].status = "تمت الموافقة والتنفيذ";
+
+             localStorage.setItem(userKey, JSON.stringify(data));
+
+        }
+
+        // 3. حذف الطلب من الإشعارات (الواجهة)
+
+        pending.splice(orderIndex, 1);
+
+        localStorage.setItem("pendingNotifications", JSON.stringify(pending));
+
+        
+
+        alert("✅ تمت الموافقة بنجاح! تم حفظ السجل في السجل الدائم وتم حذفه من الإشعارات.");
+
+        loadPendingOrders(); // تحديث واجهة الإشعارات
+
+        loadAdminLog(); // تحديث واجهة السجل الدائم
+
+    }
+
+}
+
+// دالة حذف الإشعار فقط من الواجهة (دون حفظه في السجل الدائم)
+
+function removePendingOrder(orderId) {
+
+    if (confirm("هل تريد حذف هذا الإشعار من الواجهة فقط؟ لن يتم حفظه في السجل الدائم.")) {
+
+        const pending = getPendingOrders();
+
+        const orderIndex = pending.findIndex(o => o.id === orderId);
+
+        
+
+        if (orderIndex === -1) return alert("❌ خطأ: لم يتم العثور على الطلب في الإشعارات.");
+
+        const removedOrder = pending[orderIndex];
+
+        
+
+        // تحديث سجل المستخدم ليصبح "تم الرفض"
+
+        const userKey = "user_" + removedOrder.username;
+
+        const data = JSON.parse(localStorage.getItem(userKey));
+
+        const userLogIndex = data.history.findIndex(h => h.id === orderId);
+
+        if (userLogIndex !== -1) {
+
+             data.history[userLogIndex].status = "تم الرفض/الإلغاء من قبل المشرف";
+
+             localStorage.setItem(userKey, JSON.stringify(data));
+
+        }
+
+        // حذف الطلب من الإشعارات
+
+        pending.splice(orderIndex, 1);
+
+        localStorage.setItem("pendingNotifications", JSON.stringify(pending));
+
+        
+
+        alert("✅ تم حذف الإشعار من الواجهة وتحديث حالة المستخدم إلى (تم الرفض/الإلغاء).");
+
+        loadPendingOrders(); // تحديث واجهة الإشعارات
+
+    }
+
+}
+
+// دالة تحميل السجل الدائم للمشرف
+
+function loadAdminLog() {
+
+    const logListDiv = document.getElementById("adminLogList");
+
+    const adminLog = getAdminLog();
+
+    logListDiv.innerHTML = "";
+
+    if (adminLog.length === 0) {
+
+        logListDiv.innerHTML = "<p>لا يوجد سجل شراء دائم حالياً.</p>";
+
+        return;
+
+    }
+
+    
+
+    // عرض السجل الأحدث أولاً
+
+    adminLog.slice().reverse().forEach((log) => {
+
+        const logItem = document.createElement("div");
+
+        logItem.className = "log-item";
+
+        logItem.style.backgroundColor = "rgba(76, 175, 80, 0.1)"; // لون أخضر فاتح
+
+        
+
+        let customDataHtml = "";
+
+        for (const field in log.customData) {
+
+            customDataHtml += `• ${field}: ${log.customData[field] || 'لا يوجد'}<br>`;
+
+        }
+
+        // ملاحظة: لا يوجد زر حذف هنا!
+
+        logItem.innerHTML = `
+
+            <h4>🔒 سجل دائم (ID: ${log.id})</h4>
+
+            <p><strong>المستخدم:</strong> ${log.username} (هاتف: ${log.phone})</p>
+
+            <p><strong>السلعة:</strong> ${log.itemName} - السعر: ${Number(log.price).toFixed(2)} جنيه</p>
+
+            <p><strong>البيانات المدخلة:</strong> ${log.orderField}: **${log.orderInput}**</p>
+
+            <p><strong>بيانات المستخدم المحفوظة:</strong><br>${customDataHtml}</p>
+
+            <p><strong>حالة الطلب:</strong> **${log.status}**</p>
+
+            <p style="color: gold; font-weight: bold;">لا يمكن حذف هذا السجل</p>
+
+        `;
+
+        logListDiv.appendChild(logItem);
+
+    });
+
+}
+
+// ------------------------------------------
+
+// باقي دوال المشرف (إدارة المستخدمين والأقسام) كما هي
+
+function loadUsersList(){
+
+  const usersDiv = document.getElementById("usersList");
+
+  usersDiv.innerHTML = "";
+
+  const customFields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+  for(let key in localStorage){
+
+    if(key.startsWith("user_")){
+
+      const user = key.replace("user_","");
+
+      const data = JSON.parse(localStorage.getItem(key));
+
+      const div = document.createElement("div");
+
+      div.className = "card";
+
+      
+
+      let customDataHtml = "";
+
+      customFields.forEach(field => {
+
+          customDataHtml += `<p>• ${field}: ${data.customData?.[field] || 'غير متوفر'}</p>`;
+
+      });
+
+      div.innerHTML = `
+
+        <h3>${user}</h3>
+
+        <p>📞 ${data.phone}</p>
+
+        <p>✉️ ${data.email}</p>
+
+        <p>💰 الرصيد: ${Number(data.balance).toFixed(2)}</p>
+
+        ${customDataHtml}
+
+        <button onclick="editUser('${user}')">تعديل بيانات المستخدم</button>
+
+        <button onclick="deleteUser('${user}')" class="logout-btn">حذف</button>
+
+      `;
+
+      usersDiv.appendChild(div);
+
+    }
+
+  }
+
+}
+
+function searchUser(){
+
+  const term = document.getElementById("searchUserInput").value.toLowerCase();
+
+  const usersDiv = document.getElementById("usersList");
+
+  usersDiv.innerHTML = "";
+
+  const customFields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+  for(let key in localStorage){
+
+    if(key.startsWith("user_")){
+
+      const user = key.replace("user_","");
+
+      const data = JSON.parse(localStorage.getItem(key));
+
+      
+
+      if(user.toLowerCase().includes(term) || data.phone.includes(term) || data.email.toLowerCase().includes(term)){
+
+        const div = document.createElement("div");
+
+        div.className = "card";
+
+        
+
+        let customDataHtml = "";
+
+        customFields.forEach(field => {
+
+            customDataHtml += `<p>• ${field}: ${data.customData?.[field] || 'غير متوفر'}</p>`;
+
+        });
+
+        div.innerHTML = `
+
+          <h3>${user}</h3>
+
+          <p>📞 ${data.phone}</p>
+
+          <p>✉️ ${data.email}</p>
+
+          <p>💰 الرصيد: ${Number(data.balance).toFixed(2)}</p>
+
+          ${customDataHtml}
+
+          <button onclick="editUser('${user}')">تعديل بيانات المستخدم</button>
+
+          <button onclick="deleteUser('${user}')" class="logout-btn">حذف</button>
+
+        `;
+
+        usersDiv.appendChild(div);
+
+      }
+
+    }
+
+  }
+
+  if(usersDiv.innerHTML === "") usersDiv.innerHTML = "<p>لم يتم العثور على مستخدمين!</p>";
+
+}
+
+function editUser(username){
+
+  const key = "user_"+username;
+
+  const data = JSON.parse(localStorage.getItem(key));
+
+  
+
+  const newBalance = prompt("الرصيد الجديد:", data.balance);
+
+  if(newBalance === null) return;
+
+  const newBalanceNum = Number(newBalance);
+
+  if(isNaN(newBalanceNum)) return alert("الرجاء إدخال رقم صحيح للرصيد.");
+
+  data.balance = newBalanceNum;
+
+  const newPass = prompt("كلمة المرور الجديدة (اتركها فارغة لعدم التغيير):", data.password);
+
+  if(newPass !== null && newPass.trim() !== "") data.password = newPass.trim();
+
+  const newPhone = prompt("رقم الهاتف الجديد:", data.phone);
+
+  if(newPhone !== null && newPhone.trim() !== "") {
+
+    if(!/^\d{11}$/.test(newPhone.trim())) return alert("رقم الهاتف يجب أن يكون 11 رقم! لم يتم حفظ باقي التعديلات.");
+
+    data.phone = newPhone.trim();
+
+  }
+
+  const newEmail = prompt("البريد الإلكتروني الجديد (gmail.com):", data.email);
+
+  if(newEmail !== null && newEmail.trim() !== "") {
+
+    if(!/@gmail\.com$/.test(newEmail.trim())) return alert("البريد يجب أن يكون gmail.com فقط! لم يتم حفظ باقي التعديلات.");
+
+    data.email = newEmail.trim();
+
+  }
+
+  const customFields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+  if(!data.customData) data.customData = {};
+
+  
+
+  customFields.forEach(field => {
+
+      const currentValue = data.customData[field] || '';
+
+      const newValue = prompt(`تعديل الخانة المخصصة: ${field}`, currentValue);
+
+      if (newValue !== null) {
+
+          data.customData[field] = newValue.trim();
+
+      }
+
+  });
+
+  localStorage.setItem(key, JSON.stringify(data));
+
+  alert("✅ تم تعديل جميع بيانات المستخدم بنجاح!");
+
+  loadUsersList();
+
+}
+
+function deleteUser(username){
+
+  if(confirm(`هل أنت متأكد من حذف المستخدم ${username}؟`)){
+
+    localStorage.removeItem("user_"+username);
+
+    alert("تم الحذف بنجاح.");
+
+    loadUsersList();
+
+  }
+
+}
+
+// ---------- إدارة الأقسام (بدون تغيير) ----------
+
+function loadCategoriesAdmin(){
+
+  const list = document.getElementById("mainCategories");
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  list.innerHTML = "";
+
+  cats.forEach((cat, mainIndex)=>{
+
+    const mainDiv = document.createElement("div");
+
+    mainDiv.className="card";
+
+    mainDiv.style.width = "90%";
+
+    mainDiv.innerHTML=`
+
+      <h3>قسم رئيسي: ${cat.name}</h3>
+
+      <button onclick="addSubCategory(${mainIndex})">➕ قسم فرعي</button>
+
+      <button onclick="deleteCategory(${mainIndex})">🗑 حذف القسم الرئيسي</button>
+
+      <div id="subCats_${mainIndex}" style="margin-top: 10px;"></div>
+
+    `;
+
+    list.appendChild(mainDiv);
+
+    
+
+    const subList = document.getElementById(`subCats_${mainIndex}`);
+
+    if(cat.subs && cat.subs.length > 0){
+
+        cat.subs.forEach((sub, subIndex) => {
+
+            const subDiv = document.createElement("div");
+
+            subDiv.className="card";
+
+            subDiv.innerHTML=`
+
+                <h4>${sub.name}</h4>
+
+                <button onclick="addSubSubCategory(${mainIndex}, ${subIndex})">➕ قسم فرعي فرعي</button>
+
+                <button onclick="deleteSubCategory(${mainIndex}, ${subIndex})">🗑 حذف القسم الفرعي</button>
+
+                <div id="subSubCats_${mainIndex}_${subIndex}" style="margin-top: 5px;"></div>
+
+            `;
+
+            subList.appendChild(subDiv);
+
+            
+
+            const subSubList = document.getElementById(`subSubCats_${mainIndex}_${subIndex}`);
+
+            if(sub.subs && sub.subs.length > 0){
+
+                sub.subs.forEach((subSub, subSubIndex) => {
+
+                    const subSubDiv = document.createElement("div");
+
+                    subSubDiv.className="card";
+
+                    subSubDiv.style.width = "90%";
+
+                    subSubDiv.innerHTML=`
+
+                        <h5>${subSub.name}</h5>
+
+                        <button onclick="deleteSubSubCategory(${mainIndex}, ${subIndex}, ${subSubIndex})">🗑 حذف القسم الثالث</button>
+
+                    `;
+
+                    subSubList.appendChild(subSubDiv);
+
+                });
+
+            }
+
+        });
+
+    }
+
+  });
+
+}
+
+function addMainCategory(){
+
+  const name = prompt("اسم القسم الرئيسي:");
+
+  if(!name || name.trim() === "") return;
+
+  let cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  cats.push({name:name.trim(), subs:[]});
+
+  localStorage.setItem("categories", JSON.stringify(cats));
+
+  alert(`✅ تم إضافة القسم الرئيسي: ${name}`);
+
+  loadCategoriesAdmin();
+
+}
+
+function addSubCategory(mainIndex){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const name = prompt(`اسم القسم الفرعي داخل ${cats[mainIndex].name}:`);
+
+  if(!name || name.trim() === "") return;
+
+  if(!cats[mainIndex].subs) cats[mainIndex].subs=[];
+
+  cats[mainIndex].subs.push({name:name.trim(), items:[], subs:[]}); 
+
+  localStorage.setItem("categories", JSON.stringify(cats));
+
+  alert("✅ تم إضافة القسم الفرعي!");
+
+  loadCategoriesAdmin();
+
+}
+
+function addSubSubCategory(mainIndex, subIndex){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const mainName = cats[mainIndex].name;
+
+  const subName = cats[mainIndex].subs[subIndex].name;
+
+  const name = prompt(`اسم القسم الفرعي (المستوى الثالث) داخل ${mainName} / ${subName}:`);
+
+  if(!name || name.trim() === "") return;
+
+  if(!cats[mainIndex].subs[subIndex].subs) cats[mainIndex].subs[subIndex].subs=[];
+
+  cats[mainIndex].subs[subIndex].subs.push({name:name.trim(), items:[]}); 
+
+  localStorage.setItem("categories", JSON.stringify(cats));
+
+  alert("✅ تم إضافة القسم الفرعي الثالث!");
+
+  loadCategoriesAdmin();
+
+}
+
+function deleteCategory(index){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  if(confirm(`هل تريد حذف القسم الرئيسي ${cats[index].name} وكل ما بداخله؟`)){
+
+    cats.splice(index,1);
+
+    localStorage.setItem("categories", JSON.stringify(cats));
+
+    alert("تم الحذف.");
+
+    loadCategoriesAdmin();
+
+  }
+
+}
+
+function deleteSubCategory(mainIndex, subIndex){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const subName = cats[mainIndex].subs[subIndex].name;
+
+  if(confirm(`هل تريد حذف القسم الفرعي ${subName} وكل ما بداخله؟`)){
+
+    cats[mainIndex].subs.splice(subIndex,1);
+
+    localStorage.setItem("categories", JSON.stringify(cats));
+
+    alert("تم حذف القسم الفرعي.");
+
+    loadCategoriesAdmin();
+
+  }
+
+}
+
+function deleteSubSubCategory(mainIndex, subIndex, subSubIndex){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  const subSubName = cats[mainIndex].subs[subIndex].subs[subSubIndex].name;
+
+  if(confirm(`هل تريد حذف القسم الفرعي الفرعي ${subSubName} وكل ما بداخله؟`)){
+
+    cats[mainIndex].subs[subIndex].subs.splice(subSubIndex,1);
+
+    localStorage.setItem("categories", JSON.stringify(cats));
+
+    alert("تم حذف القسم الفرعي الثالث.");
+
+    loadCategoriesAdmin();
+
+  }
+
+}
+
+// ------------------------------------------
+
+// دالة إضافة سلعة جديدة 
+
+function addItem(){
+
+  const cats = JSON.parse(localStorage.getItem("categories") || "[]");
+
+  if(cats.length===0) return alert("أضف قسم رئيسي أولاً!");
+
+  const mainName = prompt("أدخل اسم القسم الرئيسي الذي ستضيف فيه السلعة:");
+
+  const mainCat = cats.find(c=>c.name===mainName);
+
+  if(!mainCat) return alert("القسم الرئيسي غير موجود!");
+
+  const subName = prompt("أدخل اسم القسم الفرعي (المستوى الثاني) الذي ستضيف فيه السلعة:");
+
+  let subCat = mainCat.subs.find(s=>s.name===subName);
+
+  if(!subCat) return alert("القسم الفرعي غير موجود!");
+
+  let targetCat = subCat; 
+
+  
+
+  if(subCat.subs && subCat.subs.length > 0){
+
+      const subSubName = prompt("هل ستضيف السلعة لقسم فرعي آخر (المستوى الثالث)؟ أدخل اسمه (اتركه فارغاً للإضافة في القسم الحالي):");
+
+      if(subSubName && subSubName.trim() !== ""){
+
+          const subSubCat = subCat.subs.find(s=>s.name===subSubName);
+
+          if(!subSubCat) return alert("القسم الفرعي الثالث غير موجود!");
+
+          targetCat = subSubCat;
+
+      }
+
+  }
+
+  const name = prompt("اسم السلعة:");
+
+  if(!name || name.trim()==="") return alert("يجب إدخال اسم السلعة.");
+
+  
+
+  const id = prompt("اكتب ID أو كود فريد للسلعة (إجباري):");
+
+  if(!id || id.trim()==="") return alert("يجب إدخال ID/كود فريد للسلعة.");
+
+  const priceInput = prompt("أدخل سعر السلعة (بالجنيه):");
+
+  const price = Number(priceInput);
+
+  if(isNaN(price) || price <= 0) return alert("السعر غير صحيح أو فارغ.");
+
+  const orderField = prompt("اكتب اسم حقل الطلب المطلوب من المستخدم (مثلاً: ID اللعبة، أو رقم الحساب):");
+
+  if(!orderField || orderField.trim()==="") return alert("يجب إدخال اسم حقل الطلب المطلوب.");
+
+  const img = prompt("رابط صورة السلعة (اختياري):");
+
+  
+
+  if(!targetCat.items) targetCat.items=[];
+
+  targetCat.items.push({
+
+      name: name.trim(), 
+
+      id: id.trim(), 
+
+      price: price, // حفظ السعر
+
+      orderField: orderField.trim(), // حفظ اسم حقل الطلب
+
+      image: img
+
+  });
+
+  localStorage.setItem("categories", JSON.stringify(cats));
+
+  alert(`✅ تم إضافة السلعة ${name} بسعر ${price.toFixed(2)} جنيه وبحقل طلب "${orderField}" بنجاح!`);
+
+}
+
+function addCustomField(){
+
+  const fieldName = prompt("اكتب اسم الخانة الجديدة (مثلاً: رقم الحساب أو ID اللعبة):");
+
+  if(!fieldName || fieldName.trim() === "") return;
+
+  
+
+  const trimmedFieldName = fieldName.trim();
+
+  let fields = JSON.parse(localStorage.getItem("customFields") || "[]");
+
+  if(fields.includes(trimmedFieldName)) return alert("هذه الخانة مضافة مسبقاً!");
+
+  fields.push(trimmedFieldName);
+
+  localStorage.setItem("customFields", JSON.stringify(fields));
+
+  alert(`✅ تمت إضافة الخانة "${trimmedFieldName}" بنجاح! سيُطلب من المستخدمين إدخالها عند تسجيل الدخول.`);
+
+  
+
+  for(let key in localStorage){
+
+    if(key.startsWith("user_")){
+
+      const data = JSON.parse(localStorage.getItem(key));
+
+      if(!data.customData) data.customData = {};
+
+      if(data.customData[trimmedFieldName] === undefined) {
+
+          data.customData[trimmedFieldName] = "";
+
+          localStorage.setItem(key, JSON.stringify(data));
+
+      }
+
+    }
+
+  }
+
+  loadUsersList();
+
+}
+
+function addRequiredOrderField(){
+
+    alert("هذه الوظيفة تضيف خانة مخصصة دائمة مرتبطة بملف المستخدم (مثل ID اللعبة الخاص به).");
+
+    addCustomField();
+
+}
+
+// تشغيل الواجهة المناسبة عند تحميل الصفحة
+
+const loggedUser = localStorage.getItem("loggedUser");
+
+if(loggedUser === "admin"){
+
+    openAdmin();
+
+} else if (loggedUser) {
+
+    openHome();
+
+}
+
+</script>
+
+</body>
+
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
+    <script type="module" src="./script.js"></script>
+
+  </body>
+  
+</html>
