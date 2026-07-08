@@ -177,7 +177,6 @@
             html.setAttribute('lang', currentLang);
             if (currentLang === 'ar') {
                 html.setAttribute('dir', 'rtl');
-                html.classList.replace('font-sans', 'font-sans'); // Can be mapped to Arabic font family if needed
             } else {
                 html.setAttribute('dir', 'ltr');
             }
@@ -192,12 +191,12 @@
             let isSubdomain = false;
             let subdomainName = "";
 
-            // If mapping to standard local env or customized subdomains
-            if (parts.length > 2 && parts[0] !== 'www' && !hostname.includes('localhost') && !/^\d/.test(hostname)) {
+            // Modified dynamic routing to support GitHub Pages and Localhost cleanly
+            if (parts.length > 2 && parts[0] !== 'www' && !hostname.includes('localhost') && !hostname.includes('github.io') && !/^\d/.test(hostname)) {
                 isSubdomain = true;
                 subdomainName = parts[0];
             } else {
-                // To allow testing subdomains on localhost or testing platforms via query string parameter (?subdomain=demo)
+                // Testing mechanism for development layouts
                 const urlParams = new URLSearchParams(window.location.search);
                 if(urlParams.has('subdomain')) {
                     isSubdomain = true;
@@ -213,7 +212,6 @@
                     if (!querySnapshot.empty) {
                         const projectData = querySnapshot.docs[0].data();
                         
-                        // Break out of SPA entirely and inject sandboxed standalone sub-application payload
                         document.open();
                         document.write(`
                             <!DOCTYPE html>
@@ -242,7 +240,7 @@
                     return true;
                 }
             }
-            return false; // Return false to specify handling via global main routes view parser
+            return false;
         }
 
         // Global Layout Top Navigation Bar Header Component Template
@@ -399,7 +397,6 @@
                 `;
                 attachGlobalHeaderEventBindings();
 
-                // Form submission implementation handlers
                 document.getElementById('auth-submission-form').addEventListener('submit', async (e) => {
                     e.preventDefault();
                     const email = document.getElementById('auth-email-input').value.trim();
@@ -433,7 +430,6 @@
             const content = document.getElementById('view-content');
             if (!currentUser) { renderAuthView(); return; }
 
-            // Base Structural Dashboard Grid Wrapper Blueprint
             content.innerHTML = `
                 ${renderHeader()}
                 <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-[calc(100vh-140px)]">
@@ -449,7 +445,7 @@
                         
                         <div class="mt-auto">
                             <button id="trigger-chat-btn" class="w-full bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-extrabold text-sm py-4 rounded-xl shadow-xl shadow-brand-600/10 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-comment-dots"></i> ${t.ctaStart} (ابدأ بعملك عبر الإنترنت)
+                                <i class="fa-solid fa-comment-dots"></i> ${t.ctaStart}
                             </button>
                         </div>
                     </section>
@@ -472,14 +468,12 @@
             `;
             attachGlobalHeaderEventBindings();
 
-            // Bind Event Listeners for UI Actions inside the dashboard
             document.getElementById('trigger-chat-btn').addEventListener('click', () => {
                 document.getElementById('chat-section-container').scrollIntoView({ behavior: 'smooth' });
                 document.getElementById('chat-section-container').classList.add('ring-2', 'ring-brand-500');
                 document.getElementById('chat-raw-input').focus();
             });
 
-            // 1. Core Runtime Sync Logic: Populate User Subdomain Grid Projects
             try {
                 const projectsQuery = query(collection(db, "projects"), where("uid", "==", currentUser.uid));
                 const projectsSnapshot = await getDocs(projectsQuery);
@@ -493,8 +487,8 @@
                         const project = docSnap.data();
                         const pCard = document.createElement('div');
                         pCard.className = "glass p-5 rounded-xl border border-white/5 flex flex-col justify-between items-start gap-4 hover:border-brand-500/30 transition group";
-                        // Construct dynamic link checking engine
-                        const projectURL = window.location.hostname.includes('localhost') 
+                        
+                        const projectURL = window.location.hostname.includes('localhost') || window.location.hostname.includes('github.io')
                             ? `?subdomain=${project.projectName}` 
                             : `${window.location.protocol}//${project.projectName}.${window.location.hostname}`;
                         
@@ -518,11 +512,10 @@
                 document.getElementById('projects-grid-root').innerHTML = `<p class="text-red-400 text-xs">Error parsing live nodes infrastructure.</p>`;
             }
 
-            // 2. Realtime Chat Stream Execution Pipeline setup
             const userChatRef = collection(db, "chats", currentUser.uid, "messages");
             const chatQueryOrdered = query(userChatRef, orderBy("timestamp", "asc"));
 
-            if(unsubChat) unsubChat(); // Guard logic pattern to tear down running streams
+            if(unsubChat) unsubChat();
 
             const streamContainer = document.getElementById('chat-messages-stream');
 
@@ -554,7 +547,6 @@
                 console.error("Chat sync stream disconnect error:", error);
             });
 
-            // Handle Messaging Form Form Dispatch event binds
             document.getElementById('chat-message-dispatch-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const textInput = document.getElementById('chat-raw-input');
@@ -562,7 +554,7 @@
                 if(!textValue) return;
 
                 try {
-                    textInput.value = ''; // Instantly clear input for optimized feedback loops
+                    textInput.value = '';
                     await addDoc(userChatRef, {
                         senderId: currentUser.uid,
                         text: textValue,
@@ -578,6 +570,12 @@
         function render404View() {
             const t = i18n[currentLang];
             const content = document.getElementById('view-content');
+            
+            // Get current base hub URL dynamic fallback
+            const baseHub = window.location.hostname.includes('github.io') 
+                ? `${window.location.protocol}//${window.location.hostname}${window.location.pathname}`
+                : `${window.location.protocol}//${window.location.hostname}`;
+
             content.innerHTML = `
                 <div class="min-h-screen flex flex-col items-center justify-center p-4 text-center">
                     <div class="glass p-8 md:p-12 rounded-3xl border-white/10 shadow-2xl max-w-xl flex flex-col items-center gap-6 fade-in relative">
@@ -586,7 +584,7 @@
                         </div>
                         <h1 class="text-2xl md:text-4xl font-black text-white mt-8 tracking-tight">${t.error404Title}</h1>
                         <p class="text-sm text-slate-400 leading-relaxed">${t.error404Desc}</p>
-                        <button onclick="window.location.href='${window.location.protocol}//sultan.com'" class="mt-2 bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
+                        <button onclick="window.location.href='${baseHub}'" class="mt-2 bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold text-xs px-6 py-3 rounded-xl transition">
                             <i class="fa-solid fa-house-signal"></i> ${t.backHome}
                         </button>
                     </div>
@@ -594,9 +592,7 @@
             `;
         }
 
-        // Global Dynamic Header Navigation Callback Binds Engine
         function attachGlobalHeaderEventBindings() {
-            // Language Toggle click logic binding
             const langBtn = document.getElementById('lang-switch-btn');
             if (langBtn) {
                 langBtn.addEventListener('click', () => {
@@ -607,7 +603,6 @@
                 });
             }
 
-            // Central Navbar Login/Logout action trigger processing switch
             const authBtn = document.getElementById('auth-action-btn');
             if (authBtn) {
                 authBtn.addEventListener('click', async () => {
@@ -627,7 +622,6 @@
             }
         }
 
-        // --- GLOBAL CENTRAL ROUTING MANAGEMENT ENGINE ---
         let currentRouteState = 'landing'; 
         let routeArgModifier = false;
 
@@ -638,7 +632,6 @@
         };
 
         window.refreshCurrentRoute = function() {
-            // Apply Layout Direction on every repaint view state cycle
             updateLayoutDirection();
             
             switch (currentRouteState) {
@@ -656,18 +649,14 @@
             }
         };
 
-        // Initialize and Bootstrapping Orchestrator Execution Flow
         async function runApplicationBoot() {
             updateLayoutDirection();
             
-            // Check dynamic domain query layers first. Break execution line if intercept happens.
             const traceIntercepted = await routeSubdomainsAndContent();
             if (traceIntercepted) return;
 
-            // Monitor Auth Session Authentication Status state transitions
             onAuthStateChanged(auth, (user) => {
                 currentUser = user;
-                // Preserve dashboard visibility if currently actively browsing dashboard
                 if (currentRouteState === 'dashboard' && !user) {
                     currentRouteState = 'landing';
                 }
@@ -675,7 +664,6 @@
             });
         }
 
-        // Kickoff Core Process
         runApplicationBoot();
 
     </script>
